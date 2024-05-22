@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Form</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h2>Enter Student Information and Modules</h2>
+    
+    <p>
+        Add info to the database below:
+    </p>
+    
+   <form id="studentForm" action="CreateStudent.do" method="post" enctype="multipart/form-data">
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Student Number</th>
+                <th>Student Image</th>
+                <th>Module Name</th>
+                <th>Module Code</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" name="studentName" required></td>
+                <td><input type="text" name="studentNumber" required></td>
+                <td><input type="file" name="image" required></td>
+                <td><input type="text" name="moduleName[]" required></td>
+                <td><input type="text" name="moduleCode[]" required></td>
+                <td><button type="button" onclick="addModuleRow(this)">Add Module</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit">Submit</button>
+</form>
+
+<p>
+    View students in the database : <a href="ViewAllStudentsServlet.do"><i><b>Our Students</b></i></a>
+</p>
+<p>
+    Remove students in the database : <a href="remove_student.html"><i><b>Our Students</b></i></a>
+</p>
+
+<script>
+    function addModuleRow(button) {
+        // Get the current row
+        var currentRow = button.parentNode.parentNode;
+
+        // Check if studentName, studentNumber, and image inputs are filled
+        var studentNameInput = currentRow.querySelector('input[name="studentName"]');
+        var studentNumberInput = currentRow.querySelector('input[name="studentNumber"]');
+        var imageInput = currentRow.querySelector('input[name="image"]');
+
+        var studentName = studentNameInput.value;
+        var studentNumber = studentNumberInput.value;
+        var image = imageInput.value;
+
+        if (studentName && studentNumber && image) {
+            // Create hidden inputs to store the values
+            var hiddenStudentName = document.createElement('input');
+            hiddenStudentName.type = 'hidden';
+            hiddenStudentName.name = 'studentName';
+            hiddenStudentName.value = studentName;
+            currentRow.appendChild(hiddenStudentName);
+
+            var hiddenStudentNumber = document.createElement('input');
+            hiddenStudentNumber.type = 'hidden';
+            hiddenStudentNumber.name = 'studentNumber';
+            hiddenStudentNumber.value = studentNumber;
+            currentRow.appendChild(hiddenStudentNumber);
+
+            var hiddenImage = document.createElement('input');
+            hiddenImage.type = 'hidden';
+            hiddenImage.name = 'image';
+            hiddenImage.value = image;
+            currentRow.appendChild(hiddenImage);
+
+            // Disable the studentName, studentNumber, and image inputs
+            studentNameInput.disabled = true;
+            studentNumberInput.disabled = true;
+            imageInput.disabled = true;
+
+            // Clone the current row
+            var newRow = currentRow.cloneNode(true);
+
+            // Clear the module name and code inputs
+            newRow.querySelectorAll('input[type="text"]').forEach(input => {
+                if (input.name.includes('moduleName') || input.name.includes('moduleCode')) {
+                    input.value = '';
+                }
+            });
+
+            // Add the new row after the current row
+            currentRow.parentNode.insertBefore(newRow, currentRow.nextSibling);
+        } else {
+            alert("Please fill in student name, student number, and student image before adding modules.");
+        }
+    }
+</script>
+</body>
+</html>
+

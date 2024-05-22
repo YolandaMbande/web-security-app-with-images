@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Remove Student</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Remove Student Using Name!</h1>
+        <p>
+            Please enter the name of the student you want remove below: 
+        </p>
+        
+        <form action="RemoveServlet.do" method="POST">
+            <table>
+                <tr>
+                    <td>Enter the name : </td>
+                    <td><input type="text" name="name" required></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" name="REMOVE"></td>
+                </tr>
+            </table>
+        </form>
+        
+        <p>
+            <a href="index.html">main page.</a>
+        </p>
+    </body>
+</html>
